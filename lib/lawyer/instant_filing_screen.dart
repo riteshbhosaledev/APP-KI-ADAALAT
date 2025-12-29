@@ -22,7 +22,7 @@ class _InstantFilingScreenState extends State<InstantFilingScreen>
   String _selectedCaseType = 'Civil Writ';
   String _selectedUrgency = 'Normal';
   bool _isLoading = false;
-  List<File> _attachedFiles = [];
+  final List<File> _attachedFiles = [];
 
   final List<String> _caseTypes = [
     'Civil Writ',

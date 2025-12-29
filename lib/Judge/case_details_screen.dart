@@ -419,7 +419,7 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen>
             ),
           ),
           const SizedBox(height: 20),
-          ...documents.map((doc) => _buildDocumentCard(doc)).toList(),
+          ...documents.map((doc) => _buildDocumentCard(doc)),
         ],
       ),
     );

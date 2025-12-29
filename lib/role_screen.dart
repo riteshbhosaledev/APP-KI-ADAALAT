@@ -179,7 +179,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF64B5F6).withOpacity(0.6),
+                      color: const Color(0xFF64B5F6).withValues(alpha: 0.6),
                       blurRadius: 30,
                       spreadRadius: 5,
                     ),
@@ -366,9 +366,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.2),
+              width: 1,
+            ),
           ),
           child: const Text(
             'Select your official role to continue',
@@ -464,8 +467,8 @@ class _RoleCardState extends State<RoleCard>
                 boxShadow: [
                   BoxShadow(
                     color: widget.isSelected
-                        ? const Color(0xFF42A5F5).withOpacity(0.6)
-                        : const Color(0xFF1976D2).withOpacity(0.2),
+                        ? const Color(0xFF42A5F5).withValues(alpha: 0.6)
+                        : const Color(0xFF1976D2).withValues(alpha: 0.2),
                     blurRadius: widget.isSelected ? 35 : 25,
                     spreadRadius: widget.isSelected ? 2 : 0,
                   ),
@@ -501,8 +504,8 @@ class _RoleCardState extends State<RoleCard>
                     // Main shadow
                     BoxShadow(
                       color: widget.isSelected
-                          ? const Color(0xFF1976D2).withOpacity(0.5)
-                          : Colors.black.withOpacity(0.12),
+                          ? const Color(0xFF1976D2).withValues(alpha: 0.5)
+                          : Colors.black.withValues(alpha: 0.12),
                       blurRadius: widget.isSelected ? 25 : 18,
                       spreadRadius: widget.isSelected ? 3 : 1,
                       offset: const Offset(0, 10),
@@ -510,8 +513,8 @@ class _RoleCardState extends State<RoleCard>
                     // Secondary shadow for depth
                     BoxShadow(
                       color: widget.isSelected
-                          ? const Color(0xFF0D47A1).withOpacity(0.4)
-                          : const Color(0xFF1976D2).withOpacity(0.08),
+                          ? const Color(0xFF0D47A1).withValues(alpha: 0.4)
+                          : const Color(0xFF1976D2).withValues(alpha: 0.08),
                       blurRadius: 12,
                       offset: const Offset(0, 5),
                     ),
@@ -538,9 +541,15 @@ class _RoleCardState extends State<RoleCard>
                                     const Color(0xFF2196F3),
                                   ]
                                 : [
-                                    const Color(0xFF1976D2).withOpacity(0.4),
-                                    const Color(0xFF1565C0).withOpacity(0.3),
-                                    const Color(0xFF0D47A1).withOpacity(0.4),
+                                    const Color(
+                                      0xFF1976D2,
+                                    ).withValues(alpha: 0.4),
+                                    const Color(
+                                      0xFF1565C0,
+                                    ).withValues(alpha: 0.3),
+                                    const Color(
+                                      0xFF0D47A1,
+                                    ).withValues(alpha: 0.4),
                                   ],
                           ),
                         ),
@@ -573,13 +582,13 @@ class _RoleCardState extends State<RoleCard>
                                   end: Alignment.bottomRight,
                                   colors: widget.isSelected
                                       ? [
-                                          Colors.white.withOpacity(0.2),
+                                          Colors.white.withValues(alpha: 0.2),
                                           Colors.transparent,
                                         ]
                                       : [
                                           const Color(
                                             0xFF64B5F6,
-                                          ).withOpacity(0.08),
+                                          ).withValues(alpha: 0.08),
                                           Colors.transparent,
                                         ],
                                 ),

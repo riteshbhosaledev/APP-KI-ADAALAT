@@ -127,7 +127,7 @@ class _LawyerLoginScreenState extends State<LawyerLoginScreen>
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const MainScreen(),
+                const LawyerDashboard(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
                   // Smooth fade and slide transition
@@ -222,7 +222,7 @@ class _LawyerLoginScreenState extends State<LawyerLoginScreen>
                                   height: 80,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white.withOpacity(0.1),
+                                    color: Colors.white.withValues(alpha: 0.1),
                                   ),
                                 ),
                               );
@@ -245,7 +245,7 @@ class _LawyerLoginScreenState extends State<LawyerLoginScreen>
                                   height: 60,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Colors.white.withOpacity(0.08),
+                                    color: Colors.white.withValues(alpha: 0.08),
                                   ),
                                 ),
                               );
@@ -263,7 +263,7 @@ class _LawyerLoginScreenState extends State<LawyerLoginScreen>
                                 child: Icon(
                                   Icons.balance,
                                   size: 40,
-                                  color: Colors.white.withOpacity(0.1),
+                                  color: Colors.white.withValues(alpha: 0.1),
                                 ),
                               );
                             },

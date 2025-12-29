@@ -20,6 +20,35 @@ class Case {
 
 enum CaseStatus { pending, listed, defective, disposed }
 
+// Enhanced Case Model for the new dashboard
+class CaseModel {
+  final String id;
+  final String title;
+  final String type;
+  final String status;
+  final int? itemNo;
+  final int? currentItem;
+  final String? courtroom;
+  final String nextHearing;
+  final String? judge;
+  final DateTime filedDate;
+  final int defects;
+
+  CaseModel({
+    required this.id,
+    required this.title,
+    required this.type,
+    required this.status,
+    this.itemNo,
+    this.currentItem,
+    this.courtroom,
+    required this.nextHearing,
+    this.judge,
+    required this.filedDate,
+    this.defects = 0,
+  });
+}
+
 // Mock data
 class MockData {
   static List<Case> getMockCases() {
