@@ -127,7 +127,7 @@ class _LawyerLoginScreenState extends State<LawyerLoginScreen>
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const NyaayDrishtiLawyerApp(),
+                const MainScreen(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
                   // Smooth fade and slide transition

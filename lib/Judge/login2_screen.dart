@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
+import 'judge_dashboard.dart';
 
 class JudgeLoginScreen extends StatefulWidget {
-  const JudgeLoginScreen({Key? key}) : super(key: key);
+  const JudgeLoginScreen({super.key});
 
   @override
   State<JudgeLoginScreen> createState() => _JudgeLoginScreenState();
@@ -118,19 +119,41 @@ class _JudgeLoginScreenState extends State<JudgeLoginScreen>
 
       await Future.delayed(const Duration(seconds: 2));
 
+      setState(() => _isLoading = false);
+
       if (mounted) {
-        setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.info, color: Colors.white),
-                SizedBox(width: 12),
-                Text('Judicial authentication to be integrated'),
-              ],
-            ),
-            backgroundColor: Color(0xFF1E3A8A),
-            duration: Duration(seconds: 3),
+        // Navigate to judge dashboard with smooth transition
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const JudgeDashboard(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  // Smooth fade and slide transition
+                  const begin = Offset(0.0, 0.3);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOutCubic;
+
+                  var slideAnimation = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+
+                  var fadeAnimation = Tween<double>(
+                    begin: 0.0,
+                    end: 1.0,
+                  ).chain(CurveTween(curve: Curves.easeInOut));
+
+                  return SlideTransition(
+                    position: animation.drive(slideAnimation),
+                    child: FadeTransition(
+                      opacity: animation.drive(fadeAnimation),
+                      child: child,
+                    ),
+                  );
+                },
+            transitionDuration: const Duration(milliseconds: 600),
           ),
         );
       }

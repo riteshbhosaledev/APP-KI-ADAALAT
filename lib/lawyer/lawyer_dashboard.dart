@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'instant_filing_screen.dart';
 
 // --- Entry Point ---
 
 // --- App Configuration ---
-class NyaayDrishtiLawyerApp extends StatelessWidget {
-  const NyaayDrishtiLawyerApp({super.key});
+class NyaayDrishtiApp extends StatelessWidget {
+  const NyaayDrishtiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +116,7 @@ class _MainScreenState extends State<MainScreen> {
   // Views for bottom nav
   final List<Widget> _views = [
     const DashboardView(),
-    const PlaceholderView(title: "Daily Cause List"),
+    const PlaceholderView(title: "Daily Case List"),
     const PlaceholderView(title: "My Filings Archive"),
     const PlaceholderView(title: "Lawyer Profile"),
   ];
@@ -225,7 +226,12 @@ class DashboardView extends StatelessWidget {
                 icon: Icons.upload_file,
                 isPrimary: true,
                 onTap: () {
-                  // Navigate to file picker
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InstantFilingScreen(),
+                    ),
+                  );
                 },
               ),
               // Button 2: Cure Defects (Conditional)
