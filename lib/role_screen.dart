@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'lawyer/login_screen.dart';
+import 'court_master/login1_screen.dart';
+import 'Judge/login2_screen.dart';
 
 void main() {
   runApp(const NyayaDrishtiApp());
 }
 
 class NyayaDrishtiApp extends StatelessWidget {
-  const NyayaDrishtiApp({Key? key}) : super(key: key);
+  const NyayaDrishtiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class NyayaDrishtiApp extends StatelessWidget {
 }
 
 class RoleSelectionScreen extends StatefulWidget {
-  const RoleSelectionScreen({Key? key}) : super(key: key);
+  const RoleSelectionScreen({super.key});
 
   @override
   State<RoleSelectionScreen> createState() => _RoleSelectionScreenState();
@@ -32,6 +36,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
   late Animation<double> _headerFadeAnimation;
   late Animation<Offset> _headerSlideAnimation;
   String? _selectedRole;
+  bool _isNavigating = false;
 
   @override
   void initState() {
@@ -252,15 +257,98 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
               roleId: roleId,
               isSelected: _selectedRole == roleId,
               onTap: () {
+                if (_isNavigating) return; // Prevent multiple taps
+
                 setState(() {
                   _selectedRole = roleId;
+                  _isNavigating = true;
                 });
 
-                // Haptic feedback simulation and reset after delay
-                Future.delayed(const Duration(milliseconds: 1500), () {
+                // Navigate to respective login screen with enhanced smooth transition
+                Future.delayed(const Duration(milliseconds: 600), () {
                   if (mounted) {
-                    setState(() {
-                      _selectedRole = null;
+                    Widget loginScreen;
+                    switch (roleId) {
+                      case 'lawyer':
+                        loginScreen = const LawyerLoginScreen();
+                        break;
+                      case 'master':
+                        loginScreen = const CourtMasterLoginScreen();
+                        break;
+                      case 'judge':
+                        loginScreen = const JudgeLoginScreen();
+                        break;
+                      default:
+                        setState(() {
+                          _isNavigating = false;
+                          _selectedRole = null;
+                        });
+                        return;
+                    }
+
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            loginScreen,
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                              // Enhanced smooth transition with multiple effects
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.easeInOutCubic;
+
+                              // Slide animation
+                              var slideAnimation = Tween(
+                                begin: begin,
+                                end: end,
+                              ).chain(CurveTween(curve: curve));
+
+                              // Fade animation
+                              var fadeAnimation = Tween<double>(
+                                begin: 0.0,
+                                end: 1.0,
+                              ).chain(CurveTween(curve: Curves.easeInOut));
+
+                              // Scale animation for subtle zoom effect
+                              var scaleAnimation = Tween<double>(
+                                begin: 0.95,
+                                end: 1.0,
+                              ).chain(CurveTween(curve: Curves.easeOutBack));
+
+                              return SlideTransition(
+                                position: animation.drive(slideAnimation),
+                                child: FadeTransition(
+                                  opacity: animation.drive(fadeAnimation),
+                                  child: ScaleTransition(
+                                    scale: animation.drive(scaleAnimation),
+                                    child: child,
+                                  ),
+                                ),
+                              );
+                            },
+                        transitionDuration: const Duration(milliseconds: 500),
+                        reverseTransitionDuration: const Duration(
+                          milliseconds: 400,
+                        ),
+                      ),
+                    ).then((_) {
+                      // Reset state when returning from login screen
+                      if (mounted) {
+                        setState(() {
+                          _isNavigating = false;
+                          _selectedRole = null;
+                        });
+                      }
+                    });
+
+                    // Reset selection after navigation starts
+                    Future.delayed(const Duration(milliseconds: 100), () {
+                      if (mounted) {
+                        setState(() {
+                          _selectedRole = null;
+                        });
+                      }
                     });
                   }
                 });
@@ -307,14 +395,14 @@ class RoleCard extends StatefulWidget {
   final VoidCallback onTap;
 
   const RoleCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.icon,
     required this.roleId,
     required this.isSelected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<RoleCard> createState() => _RoleCardState();
@@ -351,17 +439,22 @@ class _RoleCardState extends State<RoleCard>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) => setState(() => _isHovering = true),
+      onTapDown: (_) {
+        setState(() => _isHovering = true);
+        // Add subtle haptic feedback
+        HapticFeedback.lightImpact();
+      },
       onTapUp: (_) {
         setState(() => _isHovering = false);
         widget.onTap();
       },
       onTapCancel: () => setState(() => _isHovering = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutCubic,
         transform: Matrix4.identity()
-          ..scale(_isHovering ? 0.97 : 1.0)
-          ..scale(widget.isSelected ? 1.03 : 1.0),
+          ..scale(_isHovering ? 0.96 : 1.0)
+          ..scale(widget.isSelected ? 1.05 : 1.0),
         child: Stack(
           children: [
             // Outer glow layer - always visible
