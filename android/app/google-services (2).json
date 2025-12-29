@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "478866771246",
+    "project_id": "nyaay-dhrishti",
+    "storage_bucket": "nyaay-dhrishti.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478866771246:android:b8814bfe5fb13405babebf",
+        "android_client_info": {
+          "package_name": "com.example.nyaay_dhrishti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1MJ_Aa7ve_yK_diKfrvVHaIhSoT_b6Nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
