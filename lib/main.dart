@@ -1,17 +1,20 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'core/services/app_initialization_service.dart';
 import 'splash_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyA1MJ_Aa7ve_yK_diKfrvVHaIhSoT_b6Nc",
-      appId: "1:478866771246:android:b8814bfe5fb13405babebf",
-      messagingSenderId: "478866771246",
-      projectId: "nyaay-dhrishti",
-    ),
-  );
+
+  try {
+    // Initialize all core services
+    await AppInitializationService().initialize(
+      useEmulator: false, // Set to true for development with emulator
+    );
+  } catch (e) {
+    debugPrint('Failed to initialize app: $e');
+    // App will still run but with limited functionality
+  }
+
   runApp(const MainApp());
 }
 
